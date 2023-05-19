@@ -22,7 +22,13 @@ namespace AEI_IWSK_S1
         {
 
             this.portComboBox.Items.AddRange(SerialPort.GetPortNames());
-            //this.baudComboBox.Items.AddRange(Connection.baudRates);
+            this.baudComboBox.Items.AddRange(Connection.baudRates);
+            this.parityComboBox.Items.AddRange(Connection.parityOptions);
+            this.stopBitsComboBox.Items.AddRange(Connection.stopBits);
+            this.dataFieldComboBox.Items.AddRange(Connection.dataField);
+
+
+
         }
     }
 }
