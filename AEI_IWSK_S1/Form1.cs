@@ -28,11 +28,20 @@ namespace AEI_IWSK_S1
                     Komunikacja przez port znakowy.
                     ----------------------------------------------------------
                     Twórcy:
+                    Krzysztof Adamczyk
                     Bart³omiej Ajchler
+                    Piotr Benio
                     £ukasz B³aszczyk
+                    Dominik Cio³czyk
                     Sebastian Fija³kowski
                     Roman Gawenda
+                    Bartosz Ja³owiecki
                     Micha³ Kapuœciñski
+                    Marcin Knyæ
+                    Kamil Musia³owski
+                    Micha³ Niedbalski
+                    Grzegorz Nowak
+                    Kamil Szota
 
                     """, "Twórcy", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
