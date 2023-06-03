@@ -37,7 +37,7 @@ namespace AEI_IWSK_S1
                     Roman Gawenda
                     Bartosz Ja³owiecki
                     Micha³ Kapuœciñski
-                    Marcin Knyæ
+                    Szymon Moc
                     Kamil Musia³owski
                     Micha³ Niedbalski
                     Grzegorz Nowak
