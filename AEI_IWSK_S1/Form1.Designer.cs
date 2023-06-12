@@ -49,10 +49,10 @@
             this.rtsEnableCheckBox = new System.Windows.Forms.CheckBox();
             this.dtrEnableCheckBox = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.ctsState = new System.Windows.Forms.Label();
+            this.dsrState = new System.Windows.Forms.Label();
+            this.ctsLabel = new System.Windows.Forms.Label();
+            this.dsrLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -251,11 +251,10 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Enabled = false;
+            this.groupBox3.Controls.Add(this.ctsState);
+            this.groupBox3.Controls.Add(this.dsrState);
+            this.groupBox3.Controls.Add(this.ctsLabel);
+            this.groupBox3.Controls.Add(this.dsrLabel);
             this.groupBox3.Location = new System.Drawing.Point(179, 317);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(152, 100);
@@ -263,41 +262,41 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Monitoring wejść";
             // 
-            // label2
+            // ctsState
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 22);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 15);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Wejście DSR:";
+            this.ctsState.AutoSize = true;
+            this.ctsState.Location = new System.Drawing.Point(86, 46);
+            this.ctsState.Name = "ctsState";
+            this.ctsState.Size = new System.Drawing.Size(39, 15);
+            this.ctsState.TabIndex = 3;
+            this.ctsState.Text = "Niskie";
             // 
-            // label3
+            // dsrState
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 46);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(73, 15);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Wejście CTS:";
+            this.dsrState.AutoSize = true;
+            this.dsrState.Location = new System.Drawing.Point(86, 22);
+            this.dsrState.Name = "dsrState";
+            this.dsrState.Size = new System.Drawing.Size(39, 15);
+            this.dsrState.TabIndex = 2;
+            this.dsrState.Text = "Niskie";
             // 
-            // label4
+            // ctsLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(86, 22);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(37, 15);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "niskie";
+            this.ctsLabel.AutoSize = true;
+            this.ctsLabel.Location = new System.Drawing.Point(6, 46);
+            this.ctsLabel.Name = "ctsLabel";
+            this.ctsLabel.Size = new System.Drawing.Size(73, 15);
+            this.ctsLabel.TabIndex = 1;
+            this.ctsLabel.Text = "Wejście CTS:";
             // 
-            // label5
+            // dsrLabel
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(86, 46);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(37, 15);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "niskie";
+            this.dsrLabel.AutoSize = true;
+            this.dsrLabel.Location = new System.Drawing.Point(6, 22);
+            this.dsrLabel.Name = "dsrLabel";
+            this.dsrLabel.Size = new System.Drawing.Size(74, 15);
+            this.dsrLabel.TabIndex = 0;
+            this.dsrLabel.Text = "Wejście DSR:";
             // 
             // Form1
             // 
@@ -358,9 +357,9 @@
         private CheckBox rtsEnableCheckBox;
         private CheckBox dtrEnableCheckBox;
         private GroupBox groupBox3;
-        private Label label5;
-        private Label label4;
-        private Label label3;
-        private Label label2;
+        private Label ctsState;
+        private Label dsrState;
+        private Label ctsLabel;
+        private Label dsrLabel;
     }
 }
