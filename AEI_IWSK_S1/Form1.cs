@@ -3,7 +3,9 @@ using System.Drawing.Design;
 using System.IO.Ports;
 using System.Runtime.CompilerServices;
 using System.Timers;
+using System.Security.Cryptography.Xml;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.AxHost;
 
 namespace AEI_IWSK_S1
@@ -33,6 +35,34 @@ namespace AEI_IWSK_S1
         {
             InitializeComponent();
         }
+
+        delegate void updateStateCallback();
+
+        private void updateState()
+        {
+            if (this.ctsState.InvokeRequired || this.dsrState.InvokeRequired)
+            {
+                updateStateCallback d = new updateStateCallback(updateState);
+                this.Invoke(d);
+            }
+            else
+            {
+                this.ctsState.Text = this.serial.CtsHolding ? "Wysokie" : "Niskie";
+                this.dsrState.Text = this.serial.DsrHolding ? "Wysokie" : "Niskie";
+            }
+        }
+
+        public void checkState(object sender, EventArgs e)
+        {
+            if (serial is null) {
+                return;
+            }
+            else
+            {
+                updateState();
+            }
+        }
+
 
         private void twórcyToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -243,6 +273,7 @@ namespace AEI_IWSK_S1
             try
             {
                 this.serial = new SerialPort(this.connectionData.portName);
+                this.serial.PinChanged += this.checkState;
                 if (this.deduceHandshake() == Handshake.RequestToSend)
                 {
                     changeStateOfManualControl(true);
@@ -284,6 +315,8 @@ namespace AEI_IWSK_S1
                 this.serial.Open();
                 serial.DataReceived += new SerialDataReceivedEventHandler(serial_PingDataRecieved);
                 this.logConnection("Port został otwarty!", LOGLEVEL.INFO);
+                this.ctsState.Text = this.serial.CtsHolding ? "Wysokie" : "Niskie";
+                this.dsrState.Text = this.serial.DsrHolding ? "Wysokie" : "Niskie";
             }
             catch (Exception ex)
             {

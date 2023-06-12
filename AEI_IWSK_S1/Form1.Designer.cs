@@ -28,39 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
-            statusStrip1 = new StatusStrip();
-            groupBox1 = new GroupBox();
-            textBox1 = new TextBox();
-            groupBox2 = new GroupBox();
-            textBox2 = new TextBox();
-            menuStrip1 = new MenuStrip();
-            połączenieToolStripMenuItem = new ToolStripMenuItem();
-            ustawieniaToolStripMenuItem = new ToolStripMenuItem();
-            wyjścieToolStripMenuItem = new ToolStripMenuItem();
-            oProgramieToolStripMenuItem = new ToolStripMenuItem();
-            twórcyToolStripMenuItem = new ToolStripMenuItem();
-            button1 = new Button();
-            button2 = new Button();
-            connectionInfoLabel = new Label();
-            button3 = new Button();
-            button4 = new Button();
-            label1 = new Label();
-            manualControlGroupBox = new GroupBox();
-            rtsEnableCheckBox = new CheckBox();
-            dtrEnableCheckBox = new CheckBox();
-            groupBox3 = new GroupBox();
-            label5 = new Label();
-            label4 = new Label();
-            label3 = new Label();
-            label2 = new Label();
-            button5 = new Button();
-            label6 = new Label();
-            groupBox1.SuspendLayout();
-            groupBox2.SuspendLayout();
-            menuStrip1.SuspendLayout();
-            manualControlGroupBox.SuspendLayout();
-            groupBox3.SuspendLayout();
-            SuspendLayout();
+            this.button5 = new System.Windows.Forms.Button();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.połączenieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ustawieniaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wyjścieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.oProgramieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.twórcyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.connectionInfoLabel = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.manualControlGroupBox = new System.Windows.Forms.GroupBox();
+            this.rtsEnableCheckBox = new System.Windows.Forms.CheckBox();
+            this.dtrEnableCheckBox = new System.Windows.Forms.CheckBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.ctsState = new System.Windows.Forms.Label();
+            this.dsrState = new System.Windows.Forms.Label();
+            this.ctsLabel = new System.Windows.Forms.Label();
+            this.dsrLabel = new System.Windows.Forms.Label();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
+            this.manualControlGroupBox.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.SuspendLayout();
             // 
             // statusStrip1
             // 
@@ -246,56 +245,29 @@
             // 
             // groupBox3
             // 
-            groupBox3.Controls.Add(label5);
-            groupBox3.Controls.Add(label4);
-            groupBox3.Controls.Add(label3);
-            groupBox3.Controls.Add(label2);
-            groupBox3.Enabled = false;
-            groupBox3.Location = new Point(179, 317);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(152, 100);
-            groupBox3.TabIndex = 11;
-            groupBox3.TabStop = false;
-            groupBox3.Text = "Monitoring wejść";
+            this.groupBox3.Controls.Add(this.ctsState);
+            this.groupBox3.Controls.Add(this.dsrState);
+            this.groupBox3.Controls.Add(this.ctsLabel);
+            this.groupBox3.Controls.Add(this.dsrLabel);
+            this.groupBox3.Location = new System.Drawing.Point(179, 317);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(152, 100);
+            this.groupBox3.TabIndex = 11;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Monitoring wejść";
             // 
-            // label5
+            // ctsState
             // 
-            label5.AutoSize = true;
-            label5.Location = new Point(86, 46);
-            label5.Name = "label5";
-            label5.Size = new Size(37, 15);
-            label5.TabIndex = 3;
-            label5.Text = "niskie";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(86, 22);
-            label4.Name = "label4";
-            label4.Size = new Size(37, 15);
-            label4.TabIndex = 2;
-            label4.Text = "niskie";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(6, 46);
-            label3.Name = "label3";
-            label3.Size = new Size(73, 15);
-            label3.TabIndex = 1;
-            label3.Text = "Wejście CTS:";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(6, 22);
-            label2.Name = "label2";
-            label2.Size = new Size(74, 15);
-            label2.TabIndex = 0;
-            label2.Text = "Wejście DSR:";
-            // 
+            this.ctsState.AutoSize = true;
+            this.ctsState.Location = new System.Drawing.Point(86, 46);
+            this.ctsState.Name = "ctsState";
+            this.ctsState.Size = new System.Drawing.Size(39, 15);
+            this.ctsState.TabIndex = 3;
+            this.ctsState.Text = "Niskie";
+            
+            //
             // button5
-            // 
+            //
             button5.Location = new Point(215, 288);
             button5.Name = "button5";
             button5.Size = new Size(75, 23);
@@ -303,14 +275,34 @@
             button5.Text = "Ping";
             button5.UseVisualStyleBackColor = true;
             button5.Click += button5_Click;
+
             // 
-            // label6
+            // dsrState
             // 
-            label6.AutoSize = true;
-            label6.Location = new Point(93, 292);
-            label6.Name = "label6";
-            label6.Size = new Size(0, 15);
-            label6.TabIndex = 13;
+            this.dsrState.AutoSize = true;
+            this.dsrState.Location = new System.Drawing.Point(86, 22);
+            this.dsrState.Name = "dsrState";
+            this.dsrState.Size = new System.Drawing.Size(39, 15);
+            this.dsrState.TabIndex = 2;
+            this.dsrState.Text = "Niskie";
+            // 
+            // ctsLabel
+            // 
+            this.ctsLabel.AutoSize = true;
+            this.ctsLabel.Location = new System.Drawing.Point(6, 46);
+            this.ctsLabel.Name = "ctsLabel";
+            this.ctsLabel.Size = new System.Drawing.Size(73, 15);
+            this.ctsLabel.TabIndex = 1;
+            this.ctsLabel.Text = "Wejście CTS:";
+            // 
+            // dsrLabel
+            // 
+            this.dsrLabel.AutoSize = true;
+            this.dsrLabel.Location = new System.Drawing.Point(6, 22);
+            this.dsrLabel.Name = "dsrLabel";
+            this.dsrLabel.Size = new System.Drawing.Size(74, 15);
+            this.dsrLabel.TabIndex = 0;
+            this.dsrLabel.Text = "Wejście DSR:";
             // 
             // Form1
             // 
@@ -371,11 +363,10 @@
         private CheckBox rtsEnableCheckBox;
         private CheckBox dtrEnableCheckBox;
         private GroupBox groupBox3;
-        private Label label5;
-        private Label label4;
-        private Label label3;
-        private Label label2;
         private Button button5;
-        private Label label6;
+        private Label ctsState;
+        private Label dsrState;
+        private Label ctsLabel;
+        private Label dsrLabel;
     }
 }
