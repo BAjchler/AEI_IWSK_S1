@@ -1,4 +1,4 @@
-using System.Drawing.Design;
+Ôªøusing System.Drawing.Design;
 using System.IO.Ports;
 using System.Windows.Forms;
 using static System.Windows.Forms.AxHost;
@@ -23,29 +23,29 @@ namespace AEI_IWSK_S1
             InitializeComponent();
         }
 
-        private void twÛrcyToolStripMenuItem_Click(object sender, EventArgs e)
+        private void tw√≥rcyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("""
                     Projekt AEI IWSK Katowice 2023r.
                     Komunikacja przez port znakowy.
                     ----------------------------------------------------------
-                    TwÛrcy:
+                    Tw√≥rcy:
                     Krzysztof Adamczyk
-                    Bart≥omiej Ajchler
+                    Bart≈Çomiej Ajchler
                     Piotr Benio
-                    £ukasz B≥aszczyk
-                    Dominik Cio≥czyk
-                    Sebastian Fija≥kowski
+                    ≈Åukasz B≈Çaszczyk
+                    Dominik Cio≈Çczyk
+                    Sebastian Fija≈Çkowski
                     Roman Gawenda
-                    Bartosz Ja≥owiecki
-                    Micha≥ KapuúciÒski
+                    Bartosz Ja≈Çowiecki
+                    Micha≈Ç Kapu≈õci≈Ñski
                     Szymon Moc
-                    Kamil Musia≥owski
-                    Micha≥ Niedbalski
+                    Kamil Musia≈Çowski
+                    Micha≈Ç Niedbalski
                     Grzegorz Nowak
                     Kamil Szota
 
-                    """, "TwÛrcy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    """, "Tw√≥rcy", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void logConnection(string msg, LOGLEVEL level)
@@ -69,7 +69,7 @@ namespace AEI_IWSK_S1
 
         private void ustawieniaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Ustawienia po≥πczenia, menu kontekstowe z parametrami do wyboru.
+            // Ustawienia po≈ÇƒÖczenia, menu kontekstowe z parametrami do wyboru.
             if (connectionForm is null || connectionForm.IsDisposed)
             {
                 connectionForm = new ConnectionForm(connectionData);
@@ -81,14 +81,14 @@ namespace AEI_IWSK_S1
             }
         }
 
-        private void wyjúcieToolStripMenuItem_Click(object sender, EventArgs e)
+        private void wyj≈õcieToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Za≥aduj obiekt po≥πczenia
+            // Za≈Çaduj obiekt po≈ÇƒÖczenia
 
         }
 
@@ -110,9 +110,9 @@ namespace AEI_IWSK_S1
         {
             switch(this.connectionData.dataLength)
             {
-                case "siedem bitÛw":
+                case "siedem bit√≥w":
                     return 7;
-                case "osiem bitÛw":
+                case "osiem bit√≥w":
                     return 8;
                 default: return 7;
             }
@@ -138,7 +138,7 @@ namespace AEI_IWSK_S1
                     return Handshake.None;
                 case "programowa":
                     return Handshake.XOnXOff;
-                case "sprzÍtowa":
+                case "sprzƒôtowa":
                     return Handshake.RequestToSend;
                 default: return Handshake.None;
             }
@@ -191,7 +191,7 @@ namespace AEI_IWSK_S1
         {
             if (this.serial is null)
             {
-                this.logConnection("Brak definicji po≥πczenia!", LOGLEVEL.ERROR);
+                this.logConnection("Brak definicji po≈ÇƒÖczenia!", LOGLEVEL.ERROR);
                 return;
             }
             if (this.serial.IsOpen)
@@ -200,11 +200,11 @@ namespace AEI_IWSK_S1
             }
             try {
                 this.serial.Open();
-                this.logConnection("Port zosta≥ otwarty!", LOGLEVEL.INFO);
+                this.logConnection("Port zosta≈Ç otwarty!", LOGLEVEL.INFO);
             }
             catch (Exception ex)
             {
-                this.logConnection("Port nie zosta≥ otwarty!", LOGLEVEL.ERROR);
+                this.logConnection("Port nie zosta≈Ç otwarty!", LOGLEVEL.ERROR);
             }
         }
 
@@ -213,7 +213,7 @@ namespace AEI_IWSK_S1
             if (this.serial is not null && this.serial.IsOpen)
             {
                 this.serial.Close();
-                this.logConnection("Port zosta≥ zamkniÍty!", LOGLEVEL.WARNING);
+                this.logConnection("Port zosta≈Ç zamkniƒôty!", LOGLEVEL.WARNING);
             }
         }
         private String appendTerminator()
@@ -232,7 +232,7 @@ namespace AEI_IWSK_S1
                 case "CR-LF":
                     msg = (msg + '\x000D') + '\x000A';
                     break;
-                case "W≥asny":
+                case "W≈Çasny":
                     msg += this.connectionData.customTerminator;
                     break;
             }
@@ -246,7 +246,7 @@ namespace AEI_IWSK_S1
             }
             else
             {
-                this.logConnection("Po≥πczenie nie zosta≥o otwarte lub zdefiniowane!", LOGLEVEL.ERROR);
+                this.logConnection("Po≈ÇƒÖczenie nie zosta≈Ço otwarte lub zdefiniowane!", LOGLEVEL.ERROR);
             }
         }
 
@@ -257,7 +257,7 @@ namespace AEI_IWSK_S1
                 dtrEnableCheckBox.Checked = false;
                 rtsEnableCheckBox.Checked = false;
                 changeStateOfManualControl(false);
-                this.logConnection("Po≥πczenie zosta≥o nagle zamkniÍte!", LOGLEVEL.ERROR);
+                this.logConnection("Po≈ÇƒÖczenie zosta≈Ço nagle zamkniƒôte!", LOGLEVEL.ERROR);
                 return;
             }
             if (dtrEnableCheckBox.Checked)
@@ -277,7 +277,7 @@ namespace AEI_IWSK_S1
                 dtrEnableCheckBox.Checked = false;
                 rtsEnableCheckBox.Checked = false;
                 changeStateOfManualControl(false);
-                this.logConnection("Po≥πczenie zosta≥o nagle zamkniÍte!", LOGLEVEL.ERROR);
+                this.logConnection("Po≈ÇƒÖczenie zosta≈Ço nagle zamkniƒôte!", LOGLEVEL.ERROR);
                 return;
             }
             if (dtrEnableCheckBox.Checked)
