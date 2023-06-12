@@ -28,311 +28,324 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.połączenieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ustawieniaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.wyjścieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.oProgramieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.twórcyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.connectionInfoLabel = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.manualControlGroupBox = new System.Windows.Forms.GroupBox();
-            this.rtsEnableCheckBox = new System.Windows.Forms.CheckBox();
-            this.dtrEnableCheckBox = new System.Windows.Forms.CheckBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
-            this.manualControlGroupBox.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.SuspendLayout();
+            statusStrip1 = new StatusStrip();
+            groupBox1 = new GroupBox();
+            textBox1 = new TextBox();
+            groupBox2 = new GroupBox();
+            textBox2 = new TextBox();
+            menuStrip1 = new MenuStrip();
+            połączenieToolStripMenuItem = new ToolStripMenuItem();
+            ustawieniaToolStripMenuItem = new ToolStripMenuItem();
+            wyjścieToolStripMenuItem = new ToolStripMenuItem();
+            oProgramieToolStripMenuItem = new ToolStripMenuItem();
+            twórcyToolStripMenuItem = new ToolStripMenuItem();
+            button1 = new Button();
+            button2 = new Button();
+            connectionInfoLabel = new Label();
+            button3 = new Button();
+            button4 = new Button();
+            label1 = new Label();
+            manualControlGroupBox = new GroupBox();
+            rtsEnableCheckBox = new CheckBox();
+            dtrEnableCheckBox = new CheckBox();
+            groupBox3 = new GroupBox();
+            label5 = new Label();
+            label4 = new Label();
+            label3 = new Label();
+            label2 = new Label();
+            button5 = new Button();
+            label6 = new Label();
+            groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
+            menuStrip1.SuspendLayout();
+            manualControlGroupBox.SuspendLayout();
+            groupBox3.SuspendLayout();
+            SuspendLayout();
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 428);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(800, 22);
-            this.statusStrip1.TabIndex = 0;
-            this.statusStrip1.Text = "statusStrip1";
+            statusStrip1.Location = new Point(0, 428);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(800, 22);
+            statusStrip1.TabIndex = 0;
+            statusStrip1.Text = "statusStrip1";
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 27);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(359, 255);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Nadawanie";
+            groupBox1.Controls.Add(textBox1);
+            groupBox1.Location = new Point(12, 27);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(359, 255);
+            groupBox1.TabIndex = 1;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Nadawanie";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(0, 22);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(359, 233);
-            this.textBox1.TabIndex = 0;
+            textBox1.Location = new Point(0, 22);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(359, 233);
+            textBox1.TabIndex = 0;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.textBox2);
-            this.groupBox2.Location = new System.Drawing.Point(393, 27);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(395, 255);
-            this.groupBox2.TabIndex = 2;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Odbiór";
+            groupBox2.Controls.Add(textBox2);
+            groupBox2.Location = new Point(393, 27);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(395, 255);
+            groupBox2.TabIndex = 2;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Odbiór";
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(0, 22);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(395, 233);
-            this.textBox2.TabIndex = 1;
+            textBox2.Location = new Point(0, 22);
+            textBox2.Multiline = true;
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(395, 233);
+            textBox2.TabIndex = 1;
             // 
             // menuStrip1
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.połączenieToolStripMenuItem,
-            this.oProgramieToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
-            this.menuStrip1.TabIndex = 3;
-            this.menuStrip1.Text = "menuStrip1";
+            menuStrip1.Items.AddRange(new ToolStripItem[] { połączenieToolStripMenuItem, oProgramieToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(800, 24);
+            menuStrip1.TabIndex = 3;
+            menuStrip1.Text = "menuStrip1";
             // 
             // połączenieToolStripMenuItem
             // 
-            this.połączenieToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ustawieniaToolStripMenuItem,
-            this.wyjścieToolStripMenuItem});
-            this.połączenieToolStripMenuItem.Name = "połączenieToolStripMenuItem";
-            this.połączenieToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
-            this.połączenieToolStripMenuItem.Text = "Połączenie";
+            połączenieToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ustawieniaToolStripMenuItem, wyjścieToolStripMenuItem });
+            połączenieToolStripMenuItem.Name = "połączenieToolStripMenuItem";
+            połączenieToolStripMenuItem.Size = new Size(75, 20);
+            połączenieToolStripMenuItem.Text = "Połączenie";
             // 
             // ustawieniaToolStripMenuItem
             // 
-            this.ustawieniaToolStripMenuItem.Name = "ustawieniaToolStripMenuItem";
-            this.ustawieniaToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.ustawieniaToolStripMenuItem.Text = "Ustawienia...";
-            this.ustawieniaToolStripMenuItem.Click += new System.EventHandler(this.ustawieniaToolStripMenuItem_Click);
+            ustawieniaToolStripMenuItem.Name = "ustawieniaToolStripMenuItem";
+            ustawieniaToolStripMenuItem.Size = new Size(140, 22);
+            ustawieniaToolStripMenuItem.Text = "Ustawienia...";
+            ustawieniaToolStripMenuItem.Click += ustawieniaToolStripMenuItem_Click;
             // 
             // wyjścieToolStripMenuItem
             // 
-            this.wyjścieToolStripMenuItem.Name = "wyjścieToolStripMenuItem";
-            this.wyjścieToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.wyjścieToolStripMenuItem.Text = "Wyjście";
-            this.wyjścieToolStripMenuItem.Click += new System.EventHandler(this.wyjścieToolStripMenuItem_Click);
+            wyjścieToolStripMenuItem.Name = "wyjścieToolStripMenuItem";
+            wyjścieToolStripMenuItem.Size = new Size(140, 22);
+            wyjścieToolStripMenuItem.Text = "Wyjście";
+            wyjścieToolStripMenuItem.Click += wyjścieToolStripMenuItem_Click;
             // 
             // oProgramieToolStripMenuItem
             // 
-            this.oProgramieToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.twórcyToolStripMenuItem});
-            this.oProgramieToolStripMenuItem.Name = "oProgramieToolStripMenuItem";
-            this.oProgramieToolStripMenuItem.Size = new System.Drawing.Size(86, 20);
-            this.oProgramieToolStripMenuItem.Text = "O programie";
+            oProgramieToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { twórcyToolStripMenuItem });
+            oProgramieToolStripMenuItem.Name = "oProgramieToolStripMenuItem";
+            oProgramieToolStripMenuItem.Size = new Size(86, 20);
+            oProgramieToolStripMenuItem.Text = "O programie";
             // 
             // twórcyToolStripMenuItem
             // 
-            this.twórcyToolStripMenuItem.Name = "twórcyToolStripMenuItem";
-            this.twórcyToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
-            this.twórcyToolStripMenuItem.Text = "Twórcy";
-            this.twórcyToolStripMenuItem.Click += new System.EventHandler(this.twórcyToolStripMenuItem_Click);
+            twórcyToolStripMenuItem.Name = "twórcyToolStripMenuItem";
+            twórcyToolStripMenuItem.Size = new Size(111, 22);
+            twórcyToolStripMenuItem.Text = "Twórcy";
+            twórcyToolStripMenuItem.Click += twórcyToolStripMenuItem_Click;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(663, 402);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(125, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Ustal połączenie";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            button1.Location = new Point(663, 402);
+            button1.Name = "button1";
+            button1.Size = new Size(125, 23);
+            button1.TabIndex = 4;
+            button1.Text = "Ustal połączenie";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(296, 288);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Wyślij";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            button2.Location = new Point(296, 288);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 23);
+            button2.TabIndex = 5;
+            button2.Text = "Wyślij";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // connectionInfoLabel
             // 
-            this.connectionInfoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.connectionInfoLabel.AutoSize = true;
-            this.connectionInfoLabel.ForeColor = System.Drawing.Color.Red;
-            this.connectionInfoLabel.Location = new System.Drawing.Point(532, 384);
-            this.connectionInfoLabel.Name = "connectionInfoLabel";
-            this.connectionInfoLabel.Size = new System.Drawing.Size(134, 15);
-            this.connectionInfoLabel.TabIndex = 6;
-            this.connectionInfoLabel.Text = "Brak definicji połączenia";
-            this.connectionInfoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            connectionInfoLabel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            connectionInfoLabel.AutoSize = true;
+            connectionInfoLabel.ForeColor = Color.Red;
+            connectionInfoLabel.Location = new Point(532, 384);
+            connectionInfoLabel.Name = "connectionInfoLabel";
+            connectionInfoLabel.Size = new Size(134, 15);
+            connectionInfoLabel.TabIndex = 6;
+            connectionInfoLabel.Text = "Brak definicji połączenia";
+            connectionInfoLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(532, 402);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(125, 23);
-            this.button3.TabIndex = 7;
-            this.button3.Text = "Otwórz połączenie";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            button3.Location = new Point(532, 402);
+            button3.Name = "button3";
+            button3.Size = new Size(125, 23);
+            button3.TabIndex = 7;
+            button3.Text = "Otwórz połączenie";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(401, 402);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(125, 23);
-            this.button4.TabIndex = 8;
-            this.button4.Text = "Zamknij połączenie";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            button4.Location = new Point(401, 402);
+            button4.Name = "button4";
+            button4.Size = new Size(125, 23);
+            button4.TabIndex = 8;
+            button4.Text = "Zamknij połączenie";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(549, 369);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(92, 15);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Stan połączenia:";
+            label1.AutoSize = true;
+            label1.Location = new Point(549, 369);
+            label1.Name = "label1";
+            label1.Size = new Size(92, 15);
+            label1.TabIndex = 9;
+            label1.Text = "Stan połączenia:";
             // 
             // manualControlGroupBox
             // 
-            this.manualControlGroupBox.Controls.Add(this.rtsEnableCheckBox);
-            this.manualControlGroupBox.Controls.Add(this.dtrEnableCheckBox);
-            this.manualControlGroupBox.Enabled = false;
-            this.manualControlGroupBox.Location = new System.Drawing.Point(12, 316);
-            this.manualControlGroupBox.Name = "manualControlGroupBox";
-            this.manualControlGroupBox.Size = new System.Drawing.Size(152, 100);
-            this.manualControlGroupBox.TabIndex = 10;
-            this.manualControlGroupBox.TabStop = false;
-            this.manualControlGroupBox.Text = "Kontrola ręczna";
+            manualControlGroupBox.Controls.Add(rtsEnableCheckBox);
+            manualControlGroupBox.Controls.Add(dtrEnableCheckBox);
+            manualControlGroupBox.Enabled = false;
+            manualControlGroupBox.Location = new Point(12, 316);
+            manualControlGroupBox.Name = "manualControlGroupBox";
+            manualControlGroupBox.Size = new Size(152, 100);
+            manualControlGroupBox.TabIndex = 10;
+            manualControlGroupBox.TabStop = false;
+            manualControlGroupBox.Text = "Kontrola ręczna";
             // 
             // rtsEnableCheckBox
             // 
-            this.rtsEnableCheckBox.AutoSize = true;
-            this.rtsEnableCheckBox.Location = new System.Drawing.Point(12, 47);
-            this.rtsEnableCheckBox.Name = "rtsEnableCheckBox";
-            this.rtsEnableCheckBox.Size = new System.Drawing.Size(82, 19);
-            this.rtsEnableCheckBox.TabIndex = 1;
-            this.rtsEnableCheckBox.Text = "RTS Enable";
-            this.rtsEnableCheckBox.UseVisualStyleBackColor = true;
+            rtsEnableCheckBox.AutoSize = true;
+            rtsEnableCheckBox.Location = new Point(12, 47);
+            rtsEnableCheckBox.Name = "rtsEnableCheckBox";
+            rtsEnableCheckBox.Size = new Size(82, 19);
+            rtsEnableCheckBox.TabIndex = 1;
+            rtsEnableCheckBox.Text = "RTS Enable";
+            rtsEnableCheckBox.UseVisualStyleBackColor = true;
             // 
             // dtrEnableCheckBox
             // 
-            this.dtrEnableCheckBox.AutoSize = true;
-            this.dtrEnableCheckBox.Location = new System.Drawing.Point(12, 22);
-            this.dtrEnableCheckBox.Name = "dtrEnableCheckBox";
-            this.dtrEnableCheckBox.Size = new System.Drawing.Size(84, 19);
-            this.dtrEnableCheckBox.TabIndex = 0;
-            this.dtrEnableCheckBox.Text = "DTR Enable";
-            this.dtrEnableCheckBox.UseVisualStyleBackColor = true;
-            this.dtrEnableCheckBox.CheckedChanged += new System.EventHandler(this.dtrEnableCheckBox_CheckedChanged);
+            dtrEnableCheckBox.AutoSize = true;
+            dtrEnableCheckBox.Location = new Point(12, 22);
+            dtrEnableCheckBox.Name = "dtrEnableCheckBox";
+            dtrEnableCheckBox.Size = new Size(84, 19);
+            dtrEnableCheckBox.TabIndex = 0;
+            dtrEnableCheckBox.Text = "DTR Enable";
+            dtrEnableCheckBox.UseVisualStyleBackColor = true;
+            dtrEnableCheckBox.CheckedChanged += dtrEnableCheckBox_CheckedChanged;
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Enabled = false;
-            this.groupBox3.Location = new System.Drawing.Point(179, 317);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(152, 100);
-            this.groupBox3.TabIndex = 11;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Monitoring wejść";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 22);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 15);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Wejście DSR:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 46);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(73, 15);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "Wejście CTS:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(86, 22);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(37, 15);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "niskie";
+            groupBox3.Controls.Add(label5);
+            groupBox3.Controls.Add(label4);
+            groupBox3.Controls.Add(label3);
+            groupBox3.Controls.Add(label2);
+            groupBox3.Enabled = false;
+            groupBox3.Location = new Point(179, 317);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(152, 100);
+            groupBox3.TabIndex = 11;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Monitoring wejść";
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(86, 46);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(37, 15);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "niskie";
+            label5.AutoSize = true;
+            label5.Location = new Point(86, 46);
+            label5.Name = "label5";
+            label5.Size = new Size(37, 15);
+            label5.TabIndex = 3;
+            label5.Text = "niskie";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(86, 22);
+            label4.Name = "label4";
+            label4.Size = new Size(37, 15);
+            label4.TabIndex = 2;
+            label4.Text = "niskie";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(6, 46);
+            label3.Name = "label3";
+            label3.Size = new Size(73, 15);
+            label3.TabIndex = 1;
+            label3.Text = "Wejście CTS:";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(6, 22);
+            label2.Name = "label2";
+            label2.Size = new Size(74, 15);
+            label2.TabIndex = 0;
+            label2.Text = "Wejście DSR:";
+            // 
+            // button5
+            // 
+            button5.Location = new Point(215, 288);
+            button5.Name = "button5";
+            button5.Size = new Size(75, 23);
+            button5.TabIndex = 12;
+            button5.Text = "Ping";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(93, 292);
+            label6.Name = "label6";
+            label6.Size = new Size(0, 15);
+            label6.TabIndex = 13;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.manualControlGroupBox);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.connectionInfoLabel);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
-            this.Text = "Kontrola komunikacyjna na porcie znakowym";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
-            this.manualControlGroupBox.ResumeLayout(false);
-            this.manualControlGroupBox.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(label6);
+            Controls.Add(button5);
+            Controls.Add(groupBox3);
+            Controls.Add(manualControlGroupBox);
+            Controls.Add(label1);
+            Controls.Add(button4);
+            Controls.Add(button3);
+            Controls.Add(connectionInfoLabel);
+            Controls.Add(button2);
+            Controls.Add(button1);
+            Controls.Add(groupBox2);
+            Controls.Add(groupBox1);
+            Controls.Add(statusStrip1);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
+            Name = "Form1";
+            Text = "Kontrola komunikacyjna na porcie znakowym";
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
+            manualControlGroupBox.ResumeLayout(false);
+            manualControlGroupBox.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -362,5 +375,7 @@
         private Label label4;
         private Label label3;
         private Label label2;
+        private Button button5;
+        private Label label6;
     }
 }
