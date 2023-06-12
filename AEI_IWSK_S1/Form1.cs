@@ -1,5 +1,8 @@
-﻿using System.Drawing.Design;
+﻿using System.Diagnostics;
+using System.Drawing.Design;
 using System.IO.Ports;
+using System.Runtime.CompilerServices;
+using System.Timers;
 using System.Security.Cryptography.Xml;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
@@ -16,9 +19,17 @@ namespace AEI_IWSK_S1
 
     public partial class Form1 : Form
     {
+        private const byte PING_REQUEST = 0xFF;
+        private const byte PING_RESPONSE = 0xFE;
+        private const int PING_TIMEOUT_MS = 2000;
+
         public Connection connectionData = new Connection();
         ConnectionForm connectionForm;
         public SerialPort serial;
+
+        private System.Timers.Timer pingTimeoutTimer;
+        private Stopwatch pingRoundTripTimer;
+        private bool pingTimeoutReached;
 
         public Form1()
         {
@@ -78,6 +89,82 @@ namespace AEI_IWSK_S1
                     """, "Twórcy", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        delegate void SetPingInfoCallback(String text);
+
+        private void SetPingInfo(String text)
+        {
+            if(this.textBox2.InvokeRequired)
+            {
+                SetPingInfoCallback callback = new SetPingInfoCallback(SetPingInfo);
+                this.Invoke(callback, new object[] {text});
+            }
+            else
+            {
+                this.textBox2.Text = text;
+            }
+        }
+
+        private void serial_PingDataRecieved(object sender, SerialDataReceivedEventArgs e)
+        {
+            if(serial == null || !serial.IsOpen)
+            {
+                return;
+            }
+            byte[] buffer = new byte[1];
+            serial.Read(buffer, 0, buffer.Length);
+            if (buffer[0] == PING_REQUEST)
+            {
+                serial.Write(new byte[] { PING_RESPONSE }, 0, 1);
+            }
+            else if (buffer[0] == PING_RESPONSE)
+            {
+                if(pingTimeoutReached == false && pingRoundTripTimer is not null)
+                {
+                    float elapsedMs = ((float)pingRoundTripTimer.ElapsedTicks) / (((float)Stopwatch.Frequency) / (1000L * 1000L));
+                    elapsedMs /= 1000;
+                    string msg = "Ping success: " + elapsedMs.ToString("0.00") + "ms";
+                    pingTimeoutTimer.Dispose();
+                    pingRoundTripTimer.Stop();
+                    SetPingInfo(msg);
+                }
+                
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            if (serial != null && serial.IsOpen)
+            {
+                StartPingTimeoutTimer();
+                serial.Write(new byte[] { PING_REQUEST }, 0, 1);
+            }
+            else
+            {
+                logConnection("Połączenie nie zostało otwarte lub zdefiniowane!", LOGLEVEL.ERROR);
+            }
+        }
+
+        private void StartPingTimeoutTimer()
+        {
+            pingRoundTripTimer = new Stopwatch();
+            pingTimeoutTimer = new System.Timers.Timer(PING_TIMEOUT_MS);
+            pingTimeoutTimer.Elapsed += OnTimeoutEvent;
+            pingTimeoutTimer.Start();
+            pingRoundTripTimer.Start();
+            pingTimeoutReached = false;
+        }
+
+        private void OnTimeoutEvent(object sender, EventArgs e)
+        {
+            float elapsedMs = ((float)pingRoundTripTimer.ElapsedTicks) / (((float)Stopwatch.Frequency) / (1000L * 1000L));
+            elapsedMs /= 1000;
+            string msg = "Ping timeout: " + elapsedMs.ToString("0.00") + "ms";
+            SetPingInfo(msg);
+            pingTimeoutTimer.Dispose();
+            pingRoundTripTimer.Stop();
+            pingTimeoutReached = true;
+        }
+
         private void logConnection(string msg, LOGLEVEL level)
         {
             switch (level)
@@ -105,7 +192,7 @@ namespace AEI_IWSK_S1
                 connectionForm = new ConnectionForm(connectionData);
                 connectionForm.Show();
             }
-            else if(!connectionForm.Visible)
+            else if (!connectionForm.Visible)
             {
                 connectionForm.Show();
             }
@@ -116,15 +203,9 @@ namespace AEI_IWSK_S1
             this.Close();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            // Załaduj obiekt połączenia
-
-        }
-
         private Parity deduceParity()
         {
-            switch(this.connectionData.parity)
+            switch (this.connectionData.parity)
             {
                 case "brak":
                     return Parity.None;
@@ -138,7 +219,7 @@ namespace AEI_IWSK_S1
 
         private int deduceDataBits()
         {
-            switch(this.connectionData.dataLength)
+            switch (this.connectionData.dataLength)
             {
                 case "siedem bitów":
                     return 7;
@@ -150,7 +231,7 @@ namespace AEI_IWSK_S1
 
         private StopBits deduceStopBits()
         {
-            switch(this.connectionData.stopBitsLength)
+            switch (this.connectionData.stopBitsLength)
             {
                 case "jeden":
                     return StopBits.One;
@@ -162,7 +243,7 @@ namespace AEI_IWSK_S1
         }
         private Handshake deduceHandshake()
         {
-            switch(this.connectionData.dataFlow)
+            switch (this.connectionData.dataFlow)
             {
                 case "brak":
                     return Handshake.None;
@@ -211,8 +292,8 @@ namespace AEI_IWSK_S1
                 this.logConnection("Podany port nie istnieje!", LOGLEVEL.ERROR);
                 return;
             }
-            this.serial.BaudRate = this.connectionData.baudRate == 0 ? 150 : this.connectionData.baudRate; 
-            this.serial.Parity =  this.deduceParity();
+            this.serial.BaudRate = this.connectionData.baudRate == 0 ? 150 : this.connectionData.baudRate;
+            this.serial.Parity = this.deduceParity();
             this.serial.DataBits = this.deduceDataBits();
             this.serial.StopBits = this.deduceStopBits();
             this.serial.Handshake = this.deduceHandshake();
@@ -229,8 +310,10 @@ namespace AEI_IWSK_S1
             {
                 return;
             }
-            try {
+            try
+            {
                 this.serial.Open();
+                serial.DataReceived += new SerialDataReceivedEventHandler(serial_PingDataRecieved);
                 this.logConnection("Port został otwarty!", LOGLEVEL.INFO);
                 this.ctsState.Text = this.serial.CtsHolding ? "Wysokie" : "Niskie";
                 this.dsrState.Text = this.serial.DsrHolding ? "Wysokie" : "Niskie";
@@ -276,6 +359,7 @@ namespace AEI_IWSK_S1
             if (this.serial != null && this.serial.IsOpen)
             {
                 this.serial.Write(appendTerminator());
+
             }
             else
             {
@@ -322,5 +406,8 @@ namespace AEI_IWSK_S1
                 this.serial.RtsEnable = false;
             }
         }
+
+        
+
     }
 }
