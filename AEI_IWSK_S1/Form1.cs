@@ -1,5 +1,7 @@
+using System.Drawing.Design;
 using System.IO.Ports;
 using System.Windows.Forms;
+using static System.Windows.Forms.AxHost;
 
 namespace AEI_IWSK_S1
 {
@@ -128,23 +130,31 @@ namespace AEI_IWSK_S1
                     return StopBits.One;
             }
         }
-        //Tutaj nie do koñca wiem jak to ma dzia³aæ.
         private Handshake deduceHandshake()
         {
             switch(this.connectionData.dataFlow)
             {
                 case "brak":
                     return Handshake.None;
-                case "XON/XOFF":
+                case "programowa":
                     return Handshake.XOnXOff;
-                case "RTS/CTS":
+                case "sprzêtowa":
                     return Handshake.RequestToSend;
                 default: return Handshake.None;
             }
         }
 
+        private void changeStateOfManualControl(bool state)
+        {
+            this.manualControlGroupBox.Enabled = state;
+            this.dtrEnableCheckBox.Enabled = state;
+            this.rtsEnableCheckBox.Enabled = state;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
+            this.dtrEnableCheckBox.Checked = false;
+            this.rtsEnableCheckBox.Checked = false;
             if (this.serial is not null && this.serial.IsOpen)
             {
                 this.serial.Close();
@@ -152,10 +162,21 @@ namespace AEI_IWSK_S1
             try
             {
                 this.serial = new SerialPort(this.connectionData.portName);
+                if (this.deduceHandshake() == Handshake.RequestToSend)
+                {
+                    changeStateOfManualControl(true);
+                }
+                else
+                {
+                    dtrEnableCheckBox.Checked = false;
+                    rtsEnableCheckBox.Checked = false;
+                    changeStateOfManualControl(false);
+                }
                 this.logConnection("Gotowy do otwarcia portu", LOGLEVEL.INFO);
             }
             catch (Exception ex)
             {
+                changeStateOfManualControl(false);
                 this.logConnection("Podany port nie istnieje!", LOGLEVEL.ERROR);
                 return;
             }
@@ -226,6 +247,46 @@ namespace AEI_IWSK_S1
             else
             {
                 this.logConnection("Po³¹czenie nie zosta³o otwarte lub zdefiniowane!", LOGLEVEL.ERROR);
+            }
+        }
+
+        private void dtrEnableCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.serial is null)
+            {
+                dtrEnableCheckBox.Checked = false;
+                rtsEnableCheckBox.Checked = false;
+                changeStateOfManualControl(false);
+                this.logConnection("Po³¹czenie zosta³o nagle zamkniête!", LOGLEVEL.ERROR);
+                return;
+            }
+            if (dtrEnableCheckBox.Checked)
+            {
+                this.serial.DtrEnable = true;
+            }
+            else
+            {
+                this.serial.DtrEnable = false;
+            }
+        }
+
+        private void rtsEnableCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.serial is null)
+            {
+                dtrEnableCheckBox.Checked = false;
+                rtsEnableCheckBox.Checked = false;
+                changeStateOfManualControl(false);
+                this.logConnection("Po³¹czenie zosta³o nagle zamkniête!", LOGLEVEL.ERROR);
+                return;
+            }
+            if (dtrEnableCheckBox.Checked)
+            {
+                this.serial.RtsEnable = true;
+            }
+            else
+            {
+                this.serial.RtsEnable = false;
             }
         }
     }

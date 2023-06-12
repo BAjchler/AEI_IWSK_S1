@@ -15,7 +15,7 @@ namespace AEI_IWSK_S1
         public static readonly String[] parityOptions = { "brak", "nieparzyste", "parzyste" };
         public static readonly String[] stopBits = {"jeden", "dwa" };
         public static readonly String[] dataField = { "siedem bitów", "osiem bitów"};
-        public static readonly String[] flowField = { "brak", "DTR/DSR", "RTS/CTS", "XON/XOFF" };
+        public static readonly String[] flowField = { "brak", "sprzętowa", "programowa" };
         public static readonly String[] terminatorField = { "brak", "CR", "LF", "CR-LF", "Własny"};
 
         public int baudRate { get; set; }

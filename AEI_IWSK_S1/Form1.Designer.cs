@@ -45,9 +45,19 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.manualControlGroupBox = new System.Windows.Forms.GroupBox();
+            this.rtsEnableCheckBox = new System.Windows.Forms.CheckBox();
+            this.dtrEnableCheckBox = new System.Windows.Forms.CheckBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.manualControlGroupBox.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // statusStrip1
@@ -206,11 +216,96 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Stan połączenia:";
             // 
+            // manualControlGroupBox
+            // 
+            this.manualControlGroupBox.Controls.Add(this.rtsEnableCheckBox);
+            this.manualControlGroupBox.Controls.Add(this.dtrEnableCheckBox);
+            this.manualControlGroupBox.Enabled = false;
+            this.manualControlGroupBox.Location = new System.Drawing.Point(12, 316);
+            this.manualControlGroupBox.Name = "manualControlGroupBox";
+            this.manualControlGroupBox.Size = new System.Drawing.Size(152, 100);
+            this.manualControlGroupBox.TabIndex = 10;
+            this.manualControlGroupBox.TabStop = false;
+            this.manualControlGroupBox.Text = "Kontrola ręczna";
+            // 
+            // rtsEnableCheckBox
+            // 
+            this.rtsEnableCheckBox.AutoSize = true;
+            this.rtsEnableCheckBox.Location = new System.Drawing.Point(12, 47);
+            this.rtsEnableCheckBox.Name = "rtsEnableCheckBox";
+            this.rtsEnableCheckBox.Size = new System.Drawing.Size(82, 19);
+            this.rtsEnableCheckBox.TabIndex = 1;
+            this.rtsEnableCheckBox.Text = "RTS Enable";
+            this.rtsEnableCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // dtrEnableCheckBox
+            // 
+            this.dtrEnableCheckBox.AutoSize = true;
+            this.dtrEnableCheckBox.Location = new System.Drawing.Point(12, 22);
+            this.dtrEnableCheckBox.Name = "dtrEnableCheckBox";
+            this.dtrEnableCheckBox.Size = new System.Drawing.Size(84, 19);
+            this.dtrEnableCheckBox.TabIndex = 0;
+            this.dtrEnableCheckBox.Text = "DTR Enable";
+            this.dtrEnableCheckBox.UseVisualStyleBackColor = true;
+            this.dtrEnableCheckBox.CheckedChanged += new System.EventHandler(this.dtrEnableCheckBox_CheckedChanged);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.label4);
+            this.groupBox3.Controls.Add(this.label3);
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Enabled = false;
+            this.groupBox3.Location = new System.Drawing.Point(179, 317);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(152, 100);
+            this.groupBox3.TabIndex = 11;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Monitoring wejść";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 22);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(74, 15);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Wejście DSR:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 46);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(73, 15);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Wejście CTS:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(86, 22);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(37, 15);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "niskie";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(86, 46);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(37, 15);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "niskie";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.manualControlGroupBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -231,6 +326,10 @@
             this.groupBox2.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.manualControlGroupBox.ResumeLayout(false);
+            this.manualControlGroupBox.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -255,5 +354,13 @@
         private Button button3;
         private Button button4;
         private Label label1;
+        private GroupBox manualControlGroupBox;
+        private CheckBox rtsEnableCheckBox;
+        private CheckBox dtrEnableCheckBox;
+        private GroupBox groupBox3;
+        private Label label5;
+        private Label label4;
+        private Label label3;
+        private Label label2;
     }
 }
