@@ -459,12 +459,9 @@ namespace AEI_IWSK_S1
                     }
                     else
                     {
-                        bool read = true;
-                        while(read is true)
-                        {
-                            msg += serial.ReadTo(term);
-                            if(serial.BytesToRead == 0) read = false;
-                        }
+                        msg += serial.ReadTo(term);
+                        byte[] discardBuffer = new byte[serial.BytesToRead];
+                        serial.Read(discardBuffer, 0, serial.BytesToRead);
                     }
                     transactionInProgress = false;
                     transactionTimeoutTimer.Dispose();
