@@ -19,17 +19,37 @@ namespace AEI_IWSK_S1
 
     public partial class Form1 : Form
     {
+        // Ping constants
         private const byte PING_REQUEST = 0xFF;
-        private const byte PING_RESPONSE = 0xFE;
+        private const byte PING_RESPONSE = 0xEF;
         private const int PING_TIMEOUT_MS = 2000;
 
+        // Transaction constants
+        private const byte TRANSACTION_REQUEST = 0xDF;
+        private const byte TRANSACTION_CONFIRM = 0xCF;
+        private const byte TRANSACTION_DENY = 0xBF;
+        private const byte TRANSACTION_END = 0xAF;
+        private const int TRANSACTION_TIMEOUT_MS = 2000;
+
+        // Terminator constants
+        private char[] TERM_CR = { '\x000D' };
+        private char[] TERM_LF = { '\x000A' };
+        private char[] TERM_CRLF = { '\x000D', '\x000A' };
+
+        // Connection variables
         public Connection connectionData = new Connection();
         ConnectionForm connectionForm;
         public SerialPort serial;
 
+        // Timers
         private System.Timers.Timer pingTimeoutTimer;
         private Stopwatch pingRoundTripTimer;
+        private System.Timers.Timer transactionTimeoutTimer;
+
+        // Others
         private bool pingTimeoutReached;
+        private bool transactionTimeoutReached;
+        private bool transactionInProgress;
 
         public Form1()
         {
@@ -89,6 +109,7 @@ namespace AEI_IWSK_S1
                     """, "Twórcy", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        #region PING
         delegate void SetPingInfoCallback(String text);
 
         private void SetPingInfo(String text)
@@ -101,33 +122,6 @@ namespace AEI_IWSK_S1
             else
             {
                 this.textBox2.Text = text;
-            }
-        }
-
-        private void serial_PingDataRecieved(object sender, SerialDataReceivedEventArgs e)
-        {
-            if(serial == null || !serial.IsOpen)
-            {
-                return;
-            }
-            byte[] buffer = new byte[1];
-            serial.Read(buffer, 0, buffer.Length);
-            if (buffer[0] == PING_REQUEST)
-            {
-                serial.Write(new byte[] { PING_RESPONSE }, 0, 1);
-            }
-            else if (buffer[0] == PING_RESPONSE)
-            {
-                if(pingTimeoutReached == false && pingRoundTripTimer is not null)
-                {
-                    float elapsedMs = ((float)pingRoundTripTimer.ElapsedTicks) / (((float)Stopwatch.Frequency) / (1000L * 1000L));
-                    elapsedMs /= 1000;
-                    string msg = "Ping success: " + elapsedMs.ToString("0.00") + "ms";
-                    pingTimeoutTimer.Dispose();
-                    pingRoundTripTimer.Stop();
-                    SetPingInfo(msg);
-                }
-                
             }
         }
 
@@ -164,7 +158,9 @@ namespace AEI_IWSK_S1
             pingRoundTripTimer.Stop();
             pingTimeoutReached = true;
         }
+        #endregion
 
+        #region CONNECTION_UTILS
         private void logConnection(string msg, LOGLEVEL level)
         {
             switch (level)
@@ -261,7 +257,9 @@ namespace AEI_IWSK_S1
             this.dtrEnableCheckBox.Enabled = state;
             this.rtsEnableCheckBox.Enabled = state;
         }
+        #endregion
 
+        #region CONNECTION
         private void button1_Click(object sender, EventArgs e)
         {
             this.dtrEnableCheckBox.Checked = false;
@@ -313,10 +311,11 @@ namespace AEI_IWSK_S1
             try
             {
                 this.serial.Open();
-                serial.DataReceived += new SerialDataReceivedEventHandler(serial_PingDataRecieved);
+                serial.DataReceived += new SerialDataReceivedEventHandler(serial_TransactionDataRecieved);
                 this.logConnection("Port został otwarty!", LOGLEVEL.INFO);
                 this.ctsState.Text = this.serial.CtsHolding ? "Wysokie" : "Niskie";
                 this.dsrState.Text = this.serial.DsrHolding ? "Wysokie" : "Niskie";
+                transactionInProgress = false;
             }
             catch (Exception ex)
             {
@@ -354,12 +353,16 @@ namespace AEI_IWSK_S1
             }
             return msg;
         }
+        
+        #endregion
+
+        #region TRANSACTION
         private void button2_Click(object sender, EventArgs e)
         {
             if (this.serial != null && this.serial.IsOpen)
             {
-                this.serial.Write(appendTerminator());
-
+                this.serial.Write(new byte[] {TRANSACTION_REQUEST}, 0, 1);
+                StartTrancationTimeoutTimer();
             }
             else
             {
@@ -367,6 +370,145 @@ namespace AEI_IWSK_S1
             }
         }
 
+        private void serial_TransactionDataRecieved(object sender, EventArgs e)
+        {
+            if(transactionInProgress == false)
+            {
+                if (serial == null || !serial.IsOpen) return;
+                if(serial.BytesToRead == 1)
+                {
+                    byte[] buffer = new byte[1];
+                    serial.Read(buffer, 0, buffer.Length);
+                    switch (buffer[0])
+                    {
+                        case TRANSACTION_CONFIRM:
+                            transactionInProgress = false;
+                            serial.Write(appendTerminator());
+                            transactionTimeoutTimer.Dispose();
+                            break;
+
+                        case TRANSACTION_DENY:
+                            transactionInProgress = false;
+                            transactionTimeoutTimer.Dispose();
+                            SetTransactionResponse("Transakcja odrzucona przez klienta");
+                            break;
+
+                        case TRANSACTION_REQUEST:
+                            if (transactionInProgress == true)
+                            {
+                                serial.Write(new byte[] { TRANSACTION_DENY }, 0, 1);
+                                return;
+                            }
+                            transactionInProgress = true;
+                            serial.Write(new byte[] { TRANSACTION_CONFIRM }, 0, 1);
+                            StartTrancationTimeoutTimer();
+                            break;
+
+                        case PING_REQUEST:
+                            serial.Write(new byte[] { PING_RESPONSE }, 0, 1);
+                            break;
+
+                        case PING_RESPONSE:
+                            if (pingTimeoutReached == true || pingRoundTripTimer == null) return;
+                            float elapsedMs = ((float)pingRoundTripTimer.ElapsedTicks) / (((float)Stopwatch.Frequency) / (1000L * 1000L));
+                            elapsedMs /= 1000;
+                            string msg = "Ping success: " + elapsedMs.ToString("0.00") + "ms";
+                            pingTimeoutTimer.Dispose();
+                            pingRoundTripTimer.Stop();
+                            SetPingInfo(msg);
+                            break;
+
+                        default:
+                            return;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+            else
+            {
+                if (serial == null || !serial.IsOpen) return;
+                if (serial.BytesToRead > 0)
+                {
+                    byte[] buffer = new byte[serial.BytesToRead];
+                    string term = string.Empty;
+                    string msg = string.Empty;
+                    switch(connectionData.terminator)
+                    {
+                        case "brak":
+                            break;
+                        case "CR":
+                            term += '\x000D';
+                            break;
+                        case "LR":
+                            term += '\x000A';
+                            break;
+                        case "CR-LF":
+                            term = (term + '\x000D') + '\x000A';
+                            break;
+                        case "Własny":
+                            term = this.connectionData.customTerminator;
+                            break;
+                    }
+                    if(term.Equals(""))
+                    {
+                        serial.Read(buffer, 0, serial.BytesToRead);
+                        msg = System.Text.Encoding.Default.GetString(buffer);
+                    }
+                    else
+                    {
+                        msg += serial.ReadTo(term);
+                        byte[] discardBuffer = new byte[serial.BytesToRead];
+                        serial.Read(discardBuffer, 0, serial.BytesToRead);
+                    }
+                    transactionInProgress = false;
+                    transactionTimeoutTimer.Dispose();
+                    SetTransactionResponse(msg);
+                }
+                else
+                {
+                    transactionInProgress = false;
+                    transactionTimeoutTimer.Dispose();
+                    return;
+                }
+            }
+            return;
+        }
+
+        private void StartTrancationTimeoutTimer()
+        {
+            transactionTimeoutTimer = new System.Timers.Timer(TRANSACTION_TIMEOUT_MS);
+            transactionTimeoutTimer.Elapsed += OnTransactionTimeout;
+            transactionTimeoutTimer.Start();
+            transactionTimeoutReached = false;          
+        }
+
+        private void OnTransactionTimeout(object sender, EventArgs e)
+        {
+            transactionInProgress = false;
+            transactionTimeoutTimer.Dispose();
+            SetTransactionResponse("Transaction timeout");
+        }
+
+        delegate void SetTransactionResponseCallback(string text);
+
+        private void SetTransactionResponse(string text)
+        {
+            if (this.textBox2.InvokeRequired)
+            {
+                SetTransactionResponseCallback callback = new SetTransactionResponseCallback(SetTransactionResponse);
+                this.Invoke(callback, new object[] { text });
+            }
+            else
+            {
+                this.textBox2.Text = text;
+            }
+        }
+        #endregion
+
+        #region DTR_RTS_UTILS
         private void dtrEnableCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (this.serial is null)
@@ -406,8 +548,7 @@ namespace AEI_IWSK_S1
                 this.serial.RtsEnable = false;
             }
         }
-
-        
+        #endregion
 
     }
 }
