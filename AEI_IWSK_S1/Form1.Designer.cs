@@ -56,6 +56,7 @@
             ctsLabel = new Label();
             dsrLabel = new Label();
             button6 = new Button();
+            textBox4 = new TextBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             menuStrip1.SuspendLayout();
@@ -77,7 +78,7 @@
             // 
             statusStrip1.Location = new Point(0, 428);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(998, 22);
+            statusStrip1.Size = new Size(1230, 22);
             statusStrip1.TabIndex = 0;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -113,28 +114,30 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(textBox4);
             groupBox2.Controls.Add(textBox2);
             groupBox2.Location = new Point(593, 25);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(395, 255);
+            groupBox2.Size = new Size(625, 255);
             groupBox2.TabIndex = 2;
             groupBox2.TabStop = false;
             groupBox2.Text = "Odbiór";
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(6, 18);
+            textBox2.Location = new Point(370, 16);
             textBox2.Multiline = true;
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(395, 233);
+            textBox2.Size = new Size(249, 233);
             textBox2.TabIndex = 1;
+            textBox2.TextChanged += textBox2_TextChanged;
             // 
             // menuStrip1
             // 
             menuStrip1.Items.AddRange(new ToolStripItem[] { połączenieToolStripMenuItem, oProgramieToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(998, 24);
+            menuStrip1.Size = new Size(1230, 24);
             menuStrip1.TabIndex = 3;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -326,11 +329,19 @@
             button6.UseVisualStyleBackColor = true;
             button6.Click += button6_Click;
             // 
+            // textBox4
+            // 
+            textBox4.Location = new Point(8, 18);
+            textBox4.Multiline = true;
+            textBox4.Name = "textBox4";
+            textBox4.Size = new Size(356, 233);
+            textBox4.TabIndex = 2;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(998, 450);
+            ClientSize = new Size(1230, 450);
             Controls.Add(button6);
             Controls.Add(button5);
             Controls.Add(groupBox3);
@@ -392,5 +403,6 @@
         private Label dsrLabel;
         private TextBox textBox3;
         private Button button6;
+        private TextBox textBox4;
     }
 }

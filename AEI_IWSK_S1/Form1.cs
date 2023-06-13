@@ -550,20 +550,34 @@ namespace AEI_IWSK_S1
             }
         }
         #endregion
-        
-        #region HEX
-        byte[] binaryBuffer;
 
+        #region HEX
+        private byte[] binaryBuffer;
+        
+        private string ToText(byte[] bytes)
+        {
+            return Encoding.Default.GetString(bytes);
+        }
+        private string ToHex(byte[] bytes)
+        {
+            return BitConverter.ToString(bytes).Replace("-", " ");
+        }
+        private void UpdateTextInput()
+        {
+            textBox1.TextChanged -= textBox1_TextChanged;
+            textBox1.Text = ToText(binaryBuffer);
+            textBox1.TextChanged += textBox1_TextChanged;
+        }
+        private void UpdateHexInput()
+        {
+            textBox3.TextChanged -= textBox3_TextChanged;
+            textBox3.Text = ToHex(binaryBuffer);
+            textBox3.TextChanged += textBox3_TextChanged;
+        }
         private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!Uri.IsHexDigit(e.KeyChar) && e.KeyChar != '\b' && e.KeyChar != ' ')
                 e.Handled = true;
-        }
-        private void UpdateText()
-        {
-            textBox1.TextChanged -= textBox1_TextChanged;
-            textBox1.Text = Encoding.Default.GetString(binaryBuffer);
-            textBox1.TextChanged += textBox1_TextChanged;
         }
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
@@ -575,21 +589,17 @@ namespace AEI_IWSK_S1
                     System.Globalization.NumberStyles.HexNumber, null, out byte value)
                     ? value
                     : (byte)0;
-            UpdateText();
+            UpdateTextInput();
         }
-
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             binaryBuffer = Encoding.Default.GetBytes(textBox1.Text);
-            UpdateHex();
+            UpdateHexInput();
         }
-        private void UpdateHex()
+        private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            textBox3.TextChanged -= textBox3_TextChanged;
-            textBox3.Text = BitConverter.ToString(binaryBuffer).Replace("-", " ");
-            textBox3.TextChanged += textBox3_TextChanged;
+            textBox4.Text = ToHex(Encoding.Default.GetBytes(textBox2.Text));
         }
-
         private void button6_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new();
@@ -608,8 +618,8 @@ namespace AEI_IWSK_S1
             {
                 Console.WriteLine($"An error occurred while reading the file: {ex.Message}");
             }
-            UpdateHex();
-            UpdateText();
+            UpdateHexInput();
+            UpdateTextInput();
         }
         #endregion
     }
