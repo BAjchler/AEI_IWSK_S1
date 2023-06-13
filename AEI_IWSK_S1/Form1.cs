@@ -7,6 +7,7 @@ using System.Security.Cryptography.Xml;
 using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.AxHost;
+using System.Text;
 
 namespace AEI_IWSK_S1
 {
@@ -362,6 +363,7 @@ namespace AEI_IWSK_S1
             if (this.serial != null && this.serial.IsOpen)
             {
                 this.serial.Write(new byte[] {TRANSACTION_REQUEST}, 0, 1);
+                this.serial.Write(new byte[] { TRANSACTION_REQUEST }, 0, 1);
                 StartTrancationTimeoutTimer();
             }
             else
@@ -549,6 +551,67 @@ namespace AEI_IWSK_S1
             }
         }
         #endregion
+        
+        #region HEX
+        byte[] binaryBuffer;
 
+        private void textBox3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!Uri.IsHexDigit(e.KeyChar) && e.KeyChar != '\b' && e.KeyChar != ' ')
+                e.Handled = true;
+        }
+        private void UpdateText()
+        {
+            textBox1.TextChanged -= textBox1_TextChanged;
+            textBox1.Text = Encoding.Default.GetString(binaryBuffer);
+            textBox1.TextChanged += textBox1_TextChanged;
+        }
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            string[] hexValues = textBox3.Text.Split(' ');
+            binaryBuffer = new byte[hexValues.Length];
+
+            for (int i = 0; i < hexValues.Length; i++)
+                binaryBuffer[i] = byte.TryParse(hexValues[i],
+                    System.Globalization.NumberStyles.HexNumber, null, out byte value)
+                    ? value
+                    : (byte)69;
+            UpdateText();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            binaryBuffer = Encoding.Default.GetBytes(textBox1.Text);
+            UpdateHex();
+        }
+        private void UpdateHex()
+        {
+            textBox3.TextChanged -= textBox3_TextChanged;
+            textBox3.Text = BitConverter.ToString(binaryBuffer).Replace("-", " ");
+            textBox3.TextChanged += textBox3_TextChanged;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new();
+            if (ofd.ShowDialog() != DialogResult.OK)
+                return;
+
+            try
+            {
+                binaryBuffer = File.ReadAllBytes(ofd.FileName);
+            }
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine($"File not found: {ex.Message}");
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine($"An error occurred while reading the file: {ex.Message}");
+            }
+            UpdateHex();
+            UpdateText();
+        }
+        #endregion
     }
 }
