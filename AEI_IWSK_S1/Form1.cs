@@ -575,7 +575,7 @@ namespace AEI_IWSK_S1
                 binaryBuffer[i] = byte.TryParse(hexValues[i],
                     System.Globalization.NumberStyles.HexNumber, null, out byte value)
                     ? value
-                    : (byte)69;
+                    : (byte)0;
             UpdateText();
         }
 
