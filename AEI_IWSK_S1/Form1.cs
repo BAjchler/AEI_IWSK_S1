@@ -568,10 +568,10 @@ namespace AEI_IWSK_S1
         }
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
-            string[] hexValues = textBox3.Text.Split(' ');
+            string[] hexValues = textBox3.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             binaryBuffer = new byte[hexValues.Length];
 
-            for (int i = 0; i < hexValues.Length; i++)
+            for (int i = 0; i < binaryBuffer.Length; i++)
                 binaryBuffer[i] = byte.TryParse(hexValues[i],
                     System.Globalization.NumberStyles.HexNumber, null, out byte value)
                     ? value
