@@ -362,7 +362,6 @@ namespace AEI_IWSK_S1
         {
             if (this.serial != null && this.serial.IsOpen)
             {
-                this.serial.Write(new byte[] {TRANSACTION_REQUEST}, 0, 1);
                 this.serial.Write(new byte[] { TRANSACTION_REQUEST }, 0, 1);
                 StartTrancationTimeoutTimer();
             }
