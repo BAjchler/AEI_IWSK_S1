@@ -295,6 +295,7 @@ namespace AEI_IWSK_S1
             this.serial.DataBits = this.deduceDataBits();
             this.serial.StopBits = this.deduceStopBits();
             this.serial.Handshake = this.deduceHandshake();
+            this.serial.DataReceived += new SerialDataReceivedEventHandler(serial_TransactionDataRecieved);
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -311,7 +312,6 @@ namespace AEI_IWSK_S1
             try
             {
                 this.serial.Open();
-                serial.DataReceived += new SerialDataReceivedEventHandler(serial_TransactionDataRecieved);
                 this.logConnection("Port został otwarty!", LOGLEVEL.INFO);
                 this.ctsState.Text = this.serial.CtsHolding ? "Wysokie" : "Niskie";
                 this.dsrState.Text = this.serial.DsrHolding ? "Wysokie" : "Niskie";
@@ -328,6 +328,7 @@ namespace AEI_IWSK_S1
             if (this.serial is not null && this.serial.IsOpen)
             {
                 this.serial.Close();
+                this.serial.Dispose();
                 this.logConnection("Port został zamknięty!", LOGLEVEL.WARNING);
             }
         }
@@ -382,9 +383,10 @@ namespace AEI_IWSK_S1
                     switch (buffer[0])
                     {
                         case TRANSACTION_CONFIRM:
-                            transactionInProgress = false;
+                            transactionInProgress = true;
                             serial.Write(appendTerminator());
                             transactionTimeoutTimer.Dispose();
+                            StartTrancationTimeoutTimer();
                             break;
 
                         case TRANSACTION_DENY:
@@ -430,7 +432,17 @@ namespace AEI_IWSK_S1
             else
             {
                 if (serial == null || !serial.IsOpen) return;
-                if (serial.BytesToRead > 0)
+                if(serial.BytesToRead == 1)
+                {
+                    byte[] buffer = new byte[1];
+                    serial.Read(buffer, 0, buffer.Length);
+                    if (buffer[0] == TRANSACTION_END)
+                    {
+                        transactionInProgress = false;
+                        transactionTimeoutTimer.Dispose();
+                    }
+                }
+                if (serial.BytesToRead > 1)
                 {
                     byte[] buffer = new byte[serial.BytesToRead];
                     string term = string.Empty;
@@ -465,12 +477,14 @@ namespace AEI_IWSK_S1
                     }
                     transactionInProgress = false;
                     transactionTimeoutTimer.Dispose();
+                    serial.Write(new byte[] { TRANSACTION_END }, 0, 1);
                     SetTransactionResponse(msg);
                 }
                 else
                 {
                     transactionInProgress = false;
                     transactionTimeoutTimer.Dispose();
+                    serial.Write(new byte[] { TRANSACTION_END }, 0, 1);
                     return;
                 }
             }
@@ -490,6 +504,11 @@ namespace AEI_IWSK_S1
             transactionInProgress = false;
             transactionTimeoutTimer.Dispose();
             SetTransactionResponse("Transaction timeout");
+            if(serial is not null && serial.IsOpen)
+            {
+                serial.DiscardInBuffer();
+                serial.DiscardOutBuffer();
+            }
         }
 
         delegate void SetTransactionResponseCallback(string text);
