@@ -8,6 +8,8 @@ using System.Windows.Forms;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.AxHost;
 using System.Text;
+using System.Reflection.Metadata;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace AEI_IWSK_S1
 {
@@ -31,6 +33,14 @@ namespace AEI_IWSK_S1
         private const byte TRANSACTION_DENY = 0xBF;
         private const byte TRANSACTION_END = 0xAF;
         private const int TRANSACTION_TIMEOUT_MS = 2000;
+
+
+        // Send-mode constants
+        private const byte SEND_MODE_STRING = 0xEE;
+        private const byte SEND_MODE_BYTE = 0xED;
+
+        private bool receive_string = true;
+        private bool send_string = true;
 
         // Terminator constants
         private char[] TERM_CR = { '\x000D' };
@@ -361,6 +371,7 @@ namespace AEI_IWSK_S1
         #region TRANSACTION
         private void button2_Click(object sender, EventArgs e)
         {
+            this.send_string = true;
             if (this.serial != null && this.serial.IsOpen)
             {
                 this.serial.Write(new byte[] { TRANSACTION_REQUEST }, 0, 1);
@@ -385,7 +396,24 @@ namespace AEI_IWSK_S1
                     {
                         case TRANSACTION_CONFIRM:
                             transactionInProgress = true;
-                            serial.Write(appendTerminator());
+                            if(this.send_string)
+                            {
+                                serial.Write(new byte[] { SEND_MODE_STRING }, 0, 1);
+                                Thread.Sleep(2);
+                                serial.Write(appendTerminator());
+                            }
+                            else
+                            {
+                                serial.Write(new byte[] { SEND_MODE_BYTE }, 0, 1);
+                                Thread.Sleep(2);
+                                String[] hexString = textBox3.Text.Split(" ");
+                                byte[] hexBuffer = new byte[hexString.Length];
+                                for ( int i =0; i < hexString.Length; i++)
+                                {
+                                    hexBuffer[i] = byte.TryParse(hexString[i], System.Globalization.NumberStyles.HexNumber, null, out byte value) ? value : (byte)0;
+                                }
+                                serial.Write(hexBuffer, 0, hexBuffer.Length);
+                            }
                             transactionTimeoutTimer.Dispose();
                             StartTrancationTimeoutTimer();
                             break;
@@ -437,10 +465,22 @@ namespace AEI_IWSK_S1
                 {
                     byte[] buffer = new byte[1];
                     serial.Read(buffer, 0, buffer.Length);
-                    if (buffer[0] == TRANSACTION_END)
+                    switch (buffer[0])
                     {
-                        transactionInProgress = false;
-                        transactionTimeoutTimer.Dispose();
+                        case TRANSACTION_END:
+                            transactionInProgress = false;
+                            transactionTimeoutTimer.Dispose();
+                            break;
+                        case SEND_MODE_STRING:
+                            this.receive_string = true;
+                            transactionTimeoutTimer.Dispose();
+                            StartTrancationTimeoutTimer();
+                            break;
+                        case SEND_MODE_BYTE:
+                            this.receive_string = false;
+                            transactionTimeoutTimer.Dispose();
+                            StartTrancationTimeoutTimer();
+                            break;
                     }
                 }
                 if (serial.BytesToRead > 1)
@@ -479,7 +519,14 @@ namespace AEI_IWSK_S1
                     transactionInProgress = false;
                     transactionTimeoutTimer.Dispose();
                     serial.Write(new byte[] { TRANSACTION_END }, 0, 1);
-                    SetTransactionResponse(msg);
+                    if (this.receive_string)
+                    {
+                        SetTransactionResponse(msg);
+                    }
+                    else
+                    {
+                        SetTransactionResponse(String.Join(" ", buffer.Select(i => i.ToString())));
+                    }
                 }
                 else
                 {
@@ -516,14 +563,21 @@ namespace AEI_IWSK_S1
 
         private void SetTransactionResponse(string text)
         {
-            if (this.textBox2.InvokeRequired)
+            if (this.textBox2.InvokeRequired || this.textBox3.InvokeRequired)
             {
                 SetTransactionResponseCallback callback = new SetTransactionResponseCallback(SetTransactionResponse);
                 this.Invoke(callback, new object[] { text });
             }
             else
             {
-                this.textBox2.Text = text;
+                if (this.receive_string)
+                {
+                    this.textBox2.Text = text;
+                }
+                else
+                {
+                    this.textBox4.Text = text;
+                }
             }
         }
         #endregion
@@ -641,5 +695,33 @@ namespace AEI_IWSK_S1
             UpdateTextInput();
         }
         #endregion
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1 = new SaveFileDialog();
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                Stream dataStream;
+                if ((dataStream = saveFileDialog1.OpenFile()) != null)
+                {
+                    dataStream.Write(this.binaryBuffer);
+                }
+                dataStream.Close();
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            this.send_string = false;
+            if (this.serial != null && this.serial.IsOpen)
+            {
+                this.serial.Write(new byte[] { TRANSACTION_REQUEST }, 0, 1);
+                StartTrancationTimeoutTimer();
+            }
+            else
+            {
+                this.logConnection("Połączenie nie zostało otwarte lub zdefiniowane!", LOGLEVEL.ERROR);
+            }
+        }
     }
 }
